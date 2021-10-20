@@ -1,0 +1,32 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    restart: always
+    ports:
+    - "5432:5432"
+    environment:
+    - POSTGRES_PASSWORD=${PG_PW}
+    volumes: 
+    - pgdata:/var/lib/postgresql/data
+  app:
+    image: rust-server:dev
+    build:
+      context: ../../
+      dockerfile: Dockerfile.local
+    restart: always
+    command: 
+      - /bin/bash
+      - -c
+      - |
+        ./wait-for-it.sh db:5432 -- /app/app
+    ports:
+    - "8000:8000"
+    environment:
+    - APP_HOST=${APP_HOST}
+    - APP_PORT=${APP_PORT}
+    - DATABASE_URL=${DATABASE_URL}
+    depends_on:
+    - db
+volumes:
+  pgdata:
