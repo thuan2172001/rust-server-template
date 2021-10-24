@@ -47,9 +47,7 @@ async fn main() -> io::Result<()> {
     env::set_var("RUST_LOG", "actix_web=debug");
     env_logger::init();
 
-    let app_host = env::var("APP_HOST").expect("APP_HOST not found.");
-    let app_port = env::var("APP_PORT").expect("APP_PORT not found.");
-    let app_url = format!("{}:{}", &app_host, &app_port);
+    let app_url = env::var("SERVER_URL").expect("SERVER_URL not found.");
     let db_url = env::var("DATABASE_URL").expect("DATABASE_URL not found.");
 
     let pool = config::db::migrate_and_config_db(&db_url);

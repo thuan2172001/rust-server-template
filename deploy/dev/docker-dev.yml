@@ -1,15 +1,18 @@
 version: '3'
+networks:
+  rust-server:
+    name: rust-server
 services:
   db:
-    image: postgres
-    restart: always
+    image: postgres:10.8
     ports:
-    - "5432:5432"
-    environment:
-    - POSTGRES_PASSWORD=${PG_PW}
+      - "5432:5432"
+    restart: always
+    networks:
+      - rust-server
     volumes: 
-    - pgdata:/var/lib/postgresql/data
-  app:
+      - pgdata:/var/lib/postgresql/data
+  server:
     image: rust-server:dev
     build:
       context: ../../
@@ -19,14 +22,18 @@ services:
       - /bin/bash
       - -c
       - |
-        ./wait-for-it.sh db:5432 -- /app/app
+        ./wait-for-it.sh db:5432
+        cargo watch -x run --debug
     ports:
-    - "8000:8000"
+      - "8000:8000"
     environment:
-    - APP_HOST=${APP_HOST}
-    - APP_PORT=${APP_PORT}
-    - DATABASE_URL=${DATABASE_URL}
+      - SERVER_URL
+      - DATABASE_URL
+    volumes:
+      - /app/target
     depends_on:
-    - db
+      - db
+    networks:
+      - rust-server
 volumes:
   pgdata:

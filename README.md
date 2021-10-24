@@ -11,7 +11,8 @@ Or using [Docker](https://www.docker.com/)
 - Rename `secret.key.sample` to `secret.key` or create your own key by running `head -c16 /dev/urandom > secret.key` in command line (Linux/UNIX only) and copy to `/src` folder
 - Create a database in postgres cli or [pgAdmin](https://www.pgadmin.org/) tool
 - Rename `.env.sample` to `.env` and update the database connection string in `DATABASE_URL` key.
-- Build with release profile: `cargo build --release`
+- Run Watch: `cargo watch -x run`
+- Or build with release profile: `cargo build --release`
 - Run release binary in command line/terminal.
   - Windows: `target/release/app.exe`
   - Linux/UNIX: `target/release/app`
@@ -42,7 +43,7 @@ curl -X POST -i 'http://127.0.0.1:8000/api/auth/signup' -H "Content-Type: applic
 ### `POST /api/auth/login`: Login
 ```bash
 curl -X POST -H 'Content-Type: application/json' -i 'http://127.0.0.1:8000/api/auth/login'  \
-  --data '{"username_or_email":"user",  "password":"4S3cr3tPa55w0rd"}'
+  --data '{"username_or_email":"thuan",  "password":"thuan123"}'
 ```
 ### `POST /api/auth/logout`: Logout
 ```bash

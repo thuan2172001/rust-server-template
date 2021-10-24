@@ -8,5 +8,5 @@ CREATE TABLE users (
     gender BOOLEAN NOT NULL,
     age INTEGER NOT NULL,
     address VARCHAR NOT NULL,
-    phone VARCHAR(11) NOT NULL
+    phone VARCHAR NOT NULL
 );

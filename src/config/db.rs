@@ -35,16 +35,6 @@ pub fn migrate_and_config_db(url: &str) -> Pool {
     
     sql_query(r#"DROP TABLE IF EXISTS login_history;"#).execute(&pool.get().unwrap());
     sql_query(r#"DROP TABLE IF EXISTS users;"#).execute(&pool.get().unwrap());
-    // sql_query(r#"DROP TABLE IF EXISTS people;"#).execute(&pool.get().unwrap());
-    // sql_query(r#"CREATE TABLE people (
-    //     id INTEGER PRIMARY KEY NOT NULL,
-    //     name TEXT NOT NULL,
-    //     gender BOOLEAN NOT NULL,
-    //     age INTEGER NOT NULL,
-    //     address TEXT NOT NULL,
-    //     phone TEXT NOT NULL,
-    //     email TEXT NOT NULL
-    // );"#).execute(&pool.get().unwrap());
     sql_query(r#"CREATE TABLE users (
         id INTEGER PRIMARY KEY NOT NULL,
         username TEXT NOT NULL,

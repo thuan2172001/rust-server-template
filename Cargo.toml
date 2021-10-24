@@ -1,7 +1,6 @@
 [package]
 name = "app"
 version = "0.1.0"
-authors = ["Hai Phan <bahaimt@gmail.com>"]
 edition = "2018"
 
 [dependencies]

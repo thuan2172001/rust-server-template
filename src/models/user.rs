@@ -66,7 +66,12 @@ impl User {
                 password: hashed_pwd,
                 ..user
             };
-            diesel::insert_into(users).values(&user).execute(conn);
+            println!("{}", &user.username);
+
+            let rows_inserted = diesel::insert_into(users).values(&user).execute(conn);
+            println!(r#"{:?}"#, &rows_inserted);
+            // assert_eq!(Ok(1), rows_inserted);
+
             Ok(constants::MESSAGE_SIGNUP_SUCCESS.to_string())
         } else {
             Err(format!("User '{}' is already registered", &user.username))
