@@ -46,8 +46,8 @@ async fn main() -> io::Result<()> {
     dotenv::dotenv().expect("Failed to read .env file");
     env::set_var("RUST_LOG", "actix_web=debug");
     env_logger::init();
-
     let app_url = env::var("SERVER_URL").expect("SERVER_URL not found.");
+    print!("{}", app_url.to_string());
     let db_url = env::var("DATABASE_URL").expect("DATABASE_URL not found.");
 
     let pool = config::db::migrate_and_config_db(&db_url);

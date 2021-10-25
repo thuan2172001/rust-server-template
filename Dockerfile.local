@@ -1,38 +1,41 @@
 FROM rust:slim as build
 
-WORKDIR /app
-
 RUN apt-get update; \
     apt-get install --no-install-recommends -y libpq-dev libsqlite3-dev; \
     rm -rf /var/lib/apt/lists/*; \
     USER=root
 
-COPY ./Cargo.toml ./Cargo.toml
+RUN cargo new --bin app
 
-COPY ./src ./src
-COPY ./migrations ./migrations
-COPY ./diesel.toml .
-COPY ./rustfmt.toml .
-COPY ./.env.docker ./.env
+WORKDIR /app
 
-RUN mv src/secret.key.sample src/secret.key
+COPY Cargo.toml Cargo.lock /app/
 
-RUN rm ./target/debug/*; \
-    cargo build
+# COPY ./migrations ./migrations
+# COPY ./diesel.toml .
+# COPY ./rustfmt.toml .
+# COPY ./src ./src
+# COPY ./.env.docker ./.env
+
+# RUN mv src/secret.key.sample src/secret.key
+RUN cargo build --release
+RUN rm src/*.rs
+# RUN rm ./target/debug/*; \
+    # cargo build
 
 # Runtime image from here
-FROM rust:slim 
+FROM build as dev 
 
 RUN cargo install cargo-watch
 
 WORKDIR /app
 
-RUN apt-get update; \
-    apt-get install --no-install-recommends -y libpq-dev libsqlite3-dev; \
-    rm -rf /var/lib/apt/lists/*; \
-    USER=root
+# RUN apt-get update; \
+#     apt-get install --no-install-recommends -y libpq-dev libsqlite3-dev; \
+#     rm -rf /var/lib/apt/lists/*; \
+#     USER=root
 
-COPY --from=build /app .
-COPY ./wait-for-it.sh .
+# COPY --from=build /app .
+# COPY ./wait-for-it.sh .
 
-EXPOSE 8000
+# EXPOSE 8000

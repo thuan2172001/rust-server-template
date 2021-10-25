@@ -43,6 +43,10 @@ pub fn config_services(cfg: &mut web::ServiceConfig) {
                         .route(web::get().to(account_controller::find_all)),
                     )
                     .service(
+                        web::resource("/alli")
+                                .route(web::get().to(account_controller::find_all)),
+                            )
+                    .service(
                 web::resource("/{id}")
                         .route(web::get().to(account_controller::find_by_id))
                         .route(web::put().to(account_controller::update))

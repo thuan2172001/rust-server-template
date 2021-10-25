@@ -17,19 +17,20 @@ services:
     build:
       context: ../../
       dockerfile: Dockerfile.local
+      target: dev
     restart: always
     command: 
       - /bin/bash
       - -c
       - |
-        ./wait-for-it.sh db:5432
-        cargo watch -x run --debug
+        cargo watch --debug -q  -x run 
     ports:
       - "8000:8000"
     environment:
-      - SERVER_URL
-      - DATABASE_URL
+      - SERVER_URL=0.0.0.0:8000
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
     volumes:
+      - ../..:/app
       - /app/target
     depends_on:
       - db
