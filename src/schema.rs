@@ -12,12 +12,12 @@ table! {
         username -> Varchar,
         email -> Varchar,
         password -> Varchar,
-        login_session -> Varchar,
         name -> Varchar,
         gender -> Bool,
         age -> Int4,
         address -> Varchar,
         phone -> Varchar,
+        login_session -> Varchar,
     }
 }
 

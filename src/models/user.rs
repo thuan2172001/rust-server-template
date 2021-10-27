@@ -14,12 +14,12 @@ pub struct User {
     pub username: String,
     pub email: String,
     pub password: String,
-    pub login_session: String,
     pub name: String,
     pub gender: bool,
     pub age: i32,
     pub address: String,
     pub phone: String,
+    pub login_session: String,
 }
 
 #[derive(Insertable, Serialize, Deserialize)]

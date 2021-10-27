@@ -16,7 +16,11 @@ Or using [Docker](https://www.docker.com/)
 - Run release binary in command line/terminal.
   - Windows: `target/release/app.exe`
   - Linux/UNIX: `target/release/app`
+- Create new table:  diesel migration generate table_name. Then, cd folder migrations/...table_name and write your sql code to down.sql, up.sql
+- Generate file in schema.rs: diesel migration run
 
+### Note
+- Schema and models must have same fields order
 ### Docker
 
 - Enter into project directory
